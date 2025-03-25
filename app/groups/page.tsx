@@ -20,6 +20,8 @@ interface GroupData {
 export default function ShowGroupsPage() {
   const { data: session } = useSession();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   // 取得した全ての単語帳グループ情報を配列で管理
   const [groupsData, setGroupsData] = useState<GroupData[] | null>(null);
 
@@ -42,7 +44,7 @@ export default function ShowGroupsPage() {
 
     const createUser = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/users`, {
+        const response = await fetch(`${API_URL}/api/users`, {
 
           method: "POST",
           headers: {
@@ -62,13 +64,13 @@ export default function ShowGroupsPage() {
     };
 
     createUser();
-  }, [session]);
+  }, [API_URL, session]);
 
   // 全ての単語帳グループ情報を一括取得する処理
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/groups");
+        const response = await fetch(`${API_URL}/api/groups`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -87,7 +89,7 @@ export default function ShowGroupsPage() {
     };
 
     fetchData();
-  }, []);
+  }, [API_URL]);
   if (error) {
     return <div>error: {error}</div>;
   }
@@ -95,7 +97,7 @@ export default function ShowGroupsPage() {
   // 単語帳グループの削除処理
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/groups/${selectedGroupId}`, {
+      const response = await fetch(`${API_URL}/api/groups/${selectedGroupId}`, {
 
         method: "DELETE",
 

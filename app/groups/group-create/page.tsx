@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 import { ArrowLeft, BookOpen, FolderOpen, PenLine, Save } from "lucide-react"
 
 export default function CreateGroupPage() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   // 入力されたグループ名の管理
   const [groupname, setGroupname] = useState("")
@@ -35,7 +36,7 @@ export default function CreateGroupPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/groups", {
+      const response = await fetch(`${API_URL}/api/groups`, {
 
         method: "POST",
         headers: {

@@ -31,6 +31,8 @@ interface NotebookData {
 export default function LearnPage() {
   const { groupId, notebookId } = useParams();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   // 取得した全ての単語カード情報を配列で管理
   const [flashcards, setFlashcards] = useState<FlashcardData[] | null>(null);
 
@@ -72,7 +74,7 @@ export default function LearnPage() {
   useEffect(() => {
     const fetchNotebooksData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/flashcards?notebookId=${notebookId}`);
+        const response = await fetch(`${API_URL}/api/flashcards?notebookId=${notebookId}`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -91,13 +93,13 @@ export default function LearnPage() {
     };
 
     fetchNotebooksData();
-  }, [notebookId]);
+  }, [API_URL, notebookId]);
 
   // 特定の単語帳を取得する処理
   useEffect(() => {
     const fetchNotebookData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/notebooks/${notebookId}`);
+        const response = await fetch(`${API_URL}/api/notebooks/${notebookId}`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -114,7 +116,7 @@ export default function LearnPage() {
       }
     };
     fetchNotebookData();
-  }, [notebookId]);
+  }, [API_URL, notebookId]);
 
   useEffect(() => {
     if (bookmarkedOnly) {
@@ -235,7 +237,7 @@ export default function LearnPage() {
   // 単語カードのブックマークの状態を更新する処理
   const handleBookmarked = async (flashcardId: string, bookmarked: boolean) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/flashcards/${flashcardId}`, {
+      const response = await fetch(`${API_URL}/api/flashcards/${flashcardId}`, {
 
         method: "PATCH",
         headers: {

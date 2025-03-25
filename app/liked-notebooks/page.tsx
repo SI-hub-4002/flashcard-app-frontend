@@ -22,6 +22,7 @@ interface GroupData {
 }
 
 export default function ShowLikedNotebooksPage() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   // 取得した全ての単語帳情報を配列で管理
   const [notebooksData, setNotebooksData] = useState<NotebookData[] | null>(null);
@@ -41,7 +42,7 @@ export default function ShowLikedNotebooksPage() {
   useEffect(() => {
     const fetchNotebooksData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/notebooks/liked`);
+        const response = await fetch(`${API_URL}/api/notebooks/liked`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -54,7 +55,7 @@ export default function ShowLikedNotebooksPage() {
         const groupNamesMap: Record<string, string> = {};
 
         for (const groupId of groupIds) {
-          const groupResponse = await fetch(`http://localhost:8080/api/groups/${groupId}`);
+          const groupResponse = await fetch(`${API_URL}/api/groups/${groupId}`);
           if (groupResponse.ok) {
             const groupData: GroupData = await groupResponse.json();
             groupNamesMap[groupId] = groupData.groupname;
@@ -72,7 +73,7 @@ export default function ShowLikedNotebooksPage() {
     };
 
     fetchNotebooksData();
-  }, []);
+  }, [API_URL]);
 
   if (error) {
     return <div>error: {error}</div>;
@@ -81,7 +82,7 @@ export default function ShowLikedNotebooksPage() {
   // いいねボタンの状態の更新処理
   const handleLiked = async (notebookId: string, liked: boolean) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/notebooks/${notebookId}`, {
+      const response = await fetch(`${API_URL}/api/notebooks/${notebookId}`, {
 
         method: "PATCH",
         headers: {
@@ -110,7 +111,7 @@ export default function ShowLikedNotebooksPage() {
   // 単語帳の削除処理
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/notebooks/${selectedNotebookId}`, {
+      const response = await fetch(`${API_URL}/api/notebooks/${selectedNotebookId}`, {
 
         method: "DELETE",
 

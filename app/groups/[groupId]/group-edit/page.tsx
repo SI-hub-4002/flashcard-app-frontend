@@ -23,6 +23,8 @@ interface GroupData {
 export default function EditGroupPage() {
   const { groupId } = useParams();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   // 取得した単語帳グループを管理
   const [groupData, setGroupData] = useState<GroupData>();
 
@@ -49,7 +51,7 @@ export default function EditGroupPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/groups/${groupId}`, {
+      const response = await fetch(`${API_URL}/api/groups/${groupId}`, {
 
         method: "PUT",
         headers: {
@@ -74,7 +76,7 @@ export default function EditGroupPage() {
   useEffect(() => {
     const fetchGroupData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/groups/${groupId}`);
+        const response = await fetch(`${API_URL}/api/groups/${groupId}`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -95,7 +97,7 @@ export default function EditGroupPage() {
     };
 
     fetchGroupData();
-  }, [groupId]);
+  }, [API_URL, groupId]);
 
   if (error) {
     return <div>error: {error}</div>;

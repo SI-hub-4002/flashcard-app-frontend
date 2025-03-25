@@ -17,6 +17,8 @@ import { useParams } from "next/navigation"
 export default function CreateFlashcardPage() {
   const { groupId, notebookId, flashcardId } = useParams();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   // 入力された表側テキストの管理
   const [frontText, setFrontText] = useState("")
 
@@ -63,7 +65,7 @@ export default function CreateFlashcardPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/flashcards/${flashcardId}`, {
+      const response = await fetch(`${API_URL}/api/flashcards/${flashcardId}`, {
 
         method: "PUT",
         headers: {
@@ -88,7 +90,7 @@ export default function CreateFlashcardPage() {
   useEffect(() => {
     const fetchFlashcardData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/flashcards/${flashcardId}`);
+        const response = await fetch(`${API_URL}/api/flashcards/${flashcardId}`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -110,7 +112,7 @@ export default function CreateFlashcardPage() {
     };
 
     fetchFlashcardData();
-  }, [flashcardId]);
+  }, [API_URL, flashcardId]);
 
   if (error) {
     return <div>error: {error}</div>;

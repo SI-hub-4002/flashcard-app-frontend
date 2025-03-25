@@ -15,6 +15,8 @@ import { useParams } from "next/navigation"
 export default function CreateGroupPage() {
   const { groupId } = useParams();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   // 入力されたタイトルの管理
   const [title, setTitle] = useState("")
 
@@ -33,7 +35,7 @@ export default function CreateGroupPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/notebooks?groupId=${groupId}`, {
+      const response = await fetch(`${API_URL}/api/notebooks?groupId=${groupId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

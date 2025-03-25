@@ -25,6 +25,8 @@ interface NotebookData {
 export default function ShowNotebooksPage() {
   const { groupId } = useParams();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   // 取得した単語帳グループ情報をオブジェクトで管理
   const [groupData, setGroupData] = useState<GroupData>({
     groupname: "",
@@ -46,7 +48,7 @@ export default function ShowNotebooksPage() {
   useEffect(() => {
     const fetchGroupData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/groups/${groupId}`);
+        const response = await fetch(`${API_URL}/api/groups/${groupId}`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -64,13 +66,13 @@ export default function ShowNotebooksPage() {
     };
 
     fetchGroupData();
-  }, [groupId]);
+  }, [API_URL, groupId]);
 
   // 特定の単語帳グループに結びつく単語帳情報を一括取得する処理
   useEffect(() => {
     const fetchNotebooksData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/notebooks?groupId=${groupId}`);
+        const response = await fetch(`${API_URL}/api/notebooks?groupId=${groupId}`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -88,7 +90,7 @@ export default function ShowNotebooksPage() {
     };
 
     fetchNotebooksData();
-  }, [groupId]);
+  }, [API_URL, groupId]);
 
   if (error) {
     return <div>error: {error}</div>;
@@ -97,7 +99,7 @@ export default function ShowNotebooksPage() {
   // 単語帳グループのいいねボタンの状態の更新処理
   const handleLiked = async (notebookId: string, liked: boolean) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/notebooks/${notebookId}`, {
+      const response = await fetch(`${API_URL}/api/notebooks/${notebookId}`, {
 
         method: "PATCH",
         headers: {
@@ -126,7 +128,7 @@ export default function ShowNotebooksPage() {
   // 単語帳の削除処理
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/notebooks/${selectedNotebookId}`, {
+      const response = await fetch(`${API_URL}/api/notebooks/${selectedNotebookId}`, {
 
         method: "DELETE",
 

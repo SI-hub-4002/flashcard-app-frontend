@@ -17,6 +17,8 @@ import { useParams } from "next/navigation"
 export default function CreateFlashcardPage() {
   const { groupId, notebookId } = useParams();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   // 入力された表側テキストの管理
   const [frontText, setFrontText] = useState("")
 
@@ -61,7 +63,7 @@ export default function CreateFlashcardPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/flashcards?notebookId=${notebookId}`, {
+      const response = await fetch(`${API_URL}/api/flashcards?notebookId=${notebookId}`, {
 
         method: "POST",
         headers: {

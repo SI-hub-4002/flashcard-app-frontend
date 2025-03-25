@@ -25,6 +25,8 @@ interface NotebookData {
 export default function ShowFlashcardsPage() {
   const { groupId, notebookId } = useParams();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   // 取得した全ての単語カード情報を配列で管理
   const [flashcardsData, setFlashcardsData] = useState<FlashcardData[] | null>(null);
 
@@ -48,7 +50,7 @@ export default function ShowFlashcardsPage() {
   useEffect(() => {
     const fetchFlashcardData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/flashcards?notebookId=${notebookId}`);
+        const response = await fetch(`${API_URL}/api/flashcards?notebookId=${notebookId}`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -66,13 +68,13 @@ export default function ShowFlashcardsPage() {
     };
 
     fetchFlashcardData();
-  }, [notebookId]);
+  }, [API_URL, notebookId]);
 
   // 特定の単語帳情報を取得する処理
   useEffect(() => {
     const fetchNotebookData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/notebooks/${notebookId}`);
+        const response = await fetch(`${API_URL}/api/notebooks/${notebookId}`);
 
         if (!response.ok) {
           throw new Error("データの取得に失敗しました");
@@ -90,7 +92,7 @@ export default function ShowFlashcardsPage() {
     };
 
     fetchNotebookData();
-  }, [notebookId]);
+  }, [API_URL, notebookId]);
 
   if (error) {
     return <div>error: {error}</div>;
@@ -103,7 +105,7 @@ export default function ShowFlashcardsPage() {
   // 単語カードのブックマークの状態の更新処理
   const handleBookmarked = async (bookmarked: boolean, flashcardId: string) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/flashcards/${flashcardId}`, {
+      const response = await fetch(`${API_URL}/api/flashcards/${flashcardId}`, {
 
         method: "PATCH",
         headers: {
@@ -132,7 +134,7 @@ export default function ShowFlashcardsPage() {
   // 単語カードの削除処理
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/flashcards/${selectedFlashcardId}`, {
+      const response = await fetch(`${API_URL}/api/flashcards/${selectedFlashcardId}`, {
 
         method: "DELETE",
 
