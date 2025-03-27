@@ -1,4 +1,4 @@
-# N-Blog
+# Flash-learn- Frontend&Backend (React&Next.js)
 自分だけのオリジナル単語帳を作成管理できるアプリです。<br>
 作った単語帳を学習ページで学習できます。<br>
 レスポンシブ対応しているので、スマホからもご確認いただけます。
@@ -10,11 +10,7 @@
 - Typescript
 - React
 - Next.js
-- Java
-- Springboot
-- Open API
 - Auth.js
-- PostgreSQL
 
 # 機能一覧
 ## 認証機能  
