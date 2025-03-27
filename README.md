@@ -37,6 +37,7 @@
 - 〇✕を押して、現在の正解数を表示
 
 # イメージ
+![Image](https://github.com/user-attachments/assets/2e5b1b26-06a1-49fc-828d-ef052285e376)
 ![Image](https://github.com/user-attachments/assets/6445bbcb-f25a-4088-a4b6-5fd7f169efb6)
 ![Image](https://github.com/user-attachments/assets/900b3985-5f9d-4a53-a03b-150a2fc84597)
 ![Image](https://github.com/user-attachments/assets/17ef2faa-c022-4ad8-bdf3-5b86b6dfb51e)
