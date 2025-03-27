@@ -62,6 +62,22 @@ export default function CreateFlashcardPage() {
       return;
     }
 
+    // エスケープ処理
+    const escapeHtml = (str: string) => {
+      return str.replace(/[&<>"']/g, (match) => {
+        const escapeMap: { [key: string]: string } = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;',
+        };
+        return escapeMap[match];
+      });
+    };
+
+    const escapedDetail = escapeHtml(detail);
+
     try {
       const response = await fetch(`${API_URL}/api/flashcards?notebookId=${notebookId}`, {
 
@@ -69,7 +85,7 @@ export default function CreateFlashcardPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ front_text: frontText, back_text: backText, detail: detail, bookmarked: isBookmarked }),
+        body: JSON.stringify({ front_text: frontText, back_text: backText, detail: escapedDetail, bookmarked: isBookmarked }),
       });
 
       if (!response.ok) {

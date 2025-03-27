@@ -279,18 +279,18 @@ export default function LearnPage() {
 
   // 構文をJSXに変換
   const formatNotes = (detail: string) => {
-    if (!detail) return null
+    if (!detail) return null;
 
     // 太文字
-    const boldFormatted = detail.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    const boldFormatted = detail.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
     // 改行
-    const lineBreaksFormatted = boldFormatted.replace(/\n\n/g, "<br/><br/>")
+    const lineBreaksFormatted = boldFormatted.replace(/\n/g, "<br/>");
 
     // 空白
-    const listFormatted = lineBreaksFormatted.replace(/- (.*?)(?=\n|$)/g, "• $1")
+    const listFormatted = lineBreaksFormatted.replace(/- (.*?)(?=\n|$)/g, "• $1");
 
-    return <div dangerouslySetInnerHTML={{ __html: listFormatted }} />
+    return <div dangerouslySetInnerHTML={{ __html: listFormatted }} />;
   }
 
   // 詳細内容の開閉状態を切り替える処理
